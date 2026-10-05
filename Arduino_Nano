@@ -1,0 +1,27 @@
+#define ECG_PIN A0
+#define LO_PLUS 10
+#define LO_MINUS 11
+void setup()
+{
+    Serial.begin(115200);
+    pinMode(LO_PLUS, INPUT);
+    pinMode(LO_MINUS, INPUT);
+}
+void loop()
+{
+    // Check electrode connection
+    if (digitalRead(LO_PLUS) == HIGH ||
+        digitalRead(LO_MINUS) == HIGH)
+    {
+        Serial.println("!");
+    }
+    else
+    {
+        // Read ECG signal
+        int ecgValue = analogRead(ECG_PIN);
+
+        // Send ECG value to ESP32
+        Serial.println(ecgValue);
+    }
+    delay(4);
+}
